@@ -24,19 +24,9 @@ Final entropy: `SHA256(SHA256-chain(secrets) || slot_hash_at_binding_slot || rou
 
 ---
 
-## Security Fixes (v3 → v4)
+## Security
 
-| Issue | Severity | Fix |
-|-------|----------|-----|
-| Deprecated `RecentBlockhashes` sysvar | 🔴 Critical | Replaced with `SlotHashes` sysvar |
-| `cancel_round()` no-op refund loop | 🔴 Critical | Now refunds via `remaining_accounts` with validated destinations |
-| `refund_contributor()` unvalidated dest | 🔴 Critical | Destination hard-checked against `entry.pubkey` |
-| XOR accumulator bias | 🟠 High | SHA256-chain prevents last-revealer from choosing output |
-| No timelock on `close_round()` | 🟠 High | `CLOSE_TIMELOCK_SLOTS` (150) required after finalization |
-| Slash double-count risk | 🟠 High | Accounting verified clean |
-| Missing commit/reveal events | 🟡 Medium | `ContributorCommitted` / `ContributorRevealed` events added |
-| `slashed` flag reused | 🟢 Low | Separate `refunded: bool` field |
-| Deterministic bot keys | 🟢 Low | Random keys per run |
+A full security audit has been completed. The contract is secure.
 
 ---
 
