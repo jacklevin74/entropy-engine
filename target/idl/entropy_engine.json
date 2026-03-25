@@ -1,0 +1,897 @@
+{
+  "address": "FDyWtM9UBNfXNuc5oZJ1V86d3dz635WnqMfX8x5Uifbm",
+  "metadata": {
+    "name": "entropy_engine",
+    "version": "0.2.0",
+    "spec": "0.1.0",
+    "description": "RANDAO Entropy Oracle v2 — N-of-M commit-reveal + stake slashing + block hash binding"
+  },
+  "instructions": [
+    {
+      "name": "cancel_round",
+      "docs": [
+        "C1+C2: Cancel refunds all stakes inline. remaining_accounts must be",
+        "committed contributor wallets in order — destination validated against pubkey."
+      ],
+      "discriminator": [
+        82,
+        70,
+        134,
+        54,
+        46,
+        96,
+        148,
+        8
+      ],
+      "accounts": [
+        {
+          "name": "round",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  111,
+                  117,
+                  110,
+                  100
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "round.coordinator",
+                "account": "Round"
+              },
+              {
+                "kind": "account",
+                "path": "round.round_id",
+                "account": "Round"
+              }
+            ]
+          }
+        },
+        {
+          "name": "coordinator",
+          "signer": true
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "claim_slash",
+      "discriminator": [
+        92,
+        244,
+        135,
+        92,
+        35,
+        61,
+        70,
+        253
+      ],
+      "accounts": [
+        {
+          "name": "round",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  111,
+                  117,
+                  110,
+                  100
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "round.coordinator",
+                "account": "Round"
+              },
+              {
+                "kind": "account",
+                "path": "round.round_id",
+                "account": "Round"
+              }
+            ]
+          }
+        },
+        {
+          "name": "claimer",
+          "writable": true,
+          "signer": true
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "close_round",
+      "docs": [
+        "H4: Finalized rounds require CLOSE_TIMELOCK_SLOTS before close."
+      ],
+      "discriminator": [
+        149,
+        14,
+        81,
+        88,
+        230,
+        226,
+        234,
+        37
+      ],
+      "accounts": [
+        {
+          "name": "round",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  111,
+                  117,
+                  110,
+                  100
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "round.coordinator",
+                "account": "Round"
+              },
+              {
+                "kind": "account",
+                "path": "round.round_id",
+                "account": "Round"
+              }
+            ]
+          }
+        },
+        {
+          "name": "coordinator",
+          "writable": true,
+          "signer": true
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "commit",
+      "discriminator": [
+        223,
+        140,
+        142,
+        165,
+        229,
+        208,
+        156,
+        74
+      ],
+      "accounts": [
+        {
+          "name": "round",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  111,
+                  117,
+                  110,
+                  100
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "round.coordinator",
+                "account": "Round"
+              },
+              {
+                "kind": "account",
+                "path": "round.round_id",
+                "account": "Round"
+              }
+            ]
+          }
+        },
+        {
+          "name": "contributor",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "commitment",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "finalize",
+      "discriminator": [
+        171,
+        61,
+        218,
+        56,
+        127,
+        115,
+        12,
+        217
+      ],
+      "accounts": [
+        {
+          "name": "round",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  111,
+                  117,
+                  110,
+                  100
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "round.coordinator",
+                "account": "Round"
+              },
+              {
+                "kind": "account",
+                "path": "round.round_id",
+                "account": "Round"
+              }
+            ]
+          }
+        },
+        {
+          "name": "slot_hashes",
+          "address": "SysvarS1otHashes111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "initialize_round",
+      "discriminator": [
+        43,
+        135,
+        19,
+        93,
+        14,
+        225,
+        131,
+        188
+      ],
+      "accounts": [
+        {
+          "name": "round",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  111,
+                  117,
+                  110,
+                  100
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "coordinator"
+              },
+              {
+                "kind": "arg",
+                "path": "round_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "coordinator",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "round_id",
+          "type": "u64"
+        },
+        {
+          "name": "n_contributors",
+          "type": "u8"
+        },
+        {
+          "name": "m_threshold",
+          "type": "u8"
+        },
+        {
+          "name": "binding_slot",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "reveal",
+      "discriminator": [
+        9,
+        35,
+        59,
+        190,
+        167,
+        249,
+        76,
+        115
+      ],
+      "accounts": [
+        {
+          "name": "round",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  111,
+                  117,
+                  110,
+                  100
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "round.coordinator",
+                "account": "Round"
+              },
+              {
+                "kind": "account",
+                "path": "round.round_id",
+                "account": "Round"
+              }
+            ]
+          }
+        },
+        {
+          "name": "contributor",
+          "writable": true,
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "secret",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "nonce",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "slash",
+      "discriminator": [
+        204,
+        141,
+        18,
+        161,
+        8,
+        177,
+        92,
+        142
+      ],
+      "accounts": [
+        {
+          "name": "round",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  111,
+                  117,
+                  110,
+                  100
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "round.coordinator",
+                "account": "Round"
+              },
+              {
+                "kind": "account",
+                "path": "round.round_id",
+                "account": "Round"
+              }
+            ]
+          }
+        },
+        {
+          "name": "caller",
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "contributor_pubkey",
+          "type": "pubkey"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Round",
+      "discriminator": [
+        87,
+        127,
+        165,
+        51,
+        73,
+        78,
+        116,
+        174
+      ]
+    }
+  ],
+  "events": [
+    {
+      "name": "ContributorCommitted",
+      "discriminator": [
+        246,
+        161,
+        106,
+        147,
+        211,
+        46,
+        180,
+        100
+      ]
+    },
+    {
+      "name": "ContributorRevealed",
+      "discriminator": [
+        16,
+        217,
+        180,
+        215,
+        81,
+        201,
+        6,
+        109
+      ]
+    },
+    {
+      "name": "EntropyProduced",
+      "discriminator": [
+        202,
+        104,
+        88,
+        193,
+        255,
+        147,
+        234,
+        156
+      ]
+    },
+    {
+      "name": "RoundCancelled",
+      "discriminator": [
+        238,
+        141,
+        105,
+        175,
+        182,
+        158,
+        15,
+        7
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "InvalidParams",
+      "msg": "Invalid params"
+    },
+    {
+      "code": 6001,
+      "name": "WrongPhase",
+      "msg": "Wrong phase for this instruction"
+    },
+    {
+      "code": 6002,
+      "name": "CommitDeadlinePassed",
+      "msg": "Commit deadline has passed"
+    },
+    {
+      "code": 6003,
+      "name": "CommitSlotsFull",
+      "msg": "All commit slots are full"
+    },
+    {
+      "code": 6004,
+      "name": "AlreadyCommitted",
+      "msg": "Already committed"
+    },
+    {
+      "code": 6005,
+      "name": "RevealDeadlinePassed",
+      "msg": "Reveal deadline has passed"
+    },
+    {
+      "code": 6006,
+      "name": "RevealDeadlineNotPassed",
+      "msg": "Reveal deadline has not passed yet"
+    },
+    {
+      "code": 6007,
+      "name": "ContributorNotFound",
+      "msg": "Contributor not found"
+    },
+    {
+      "code": 6008,
+      "name": "AlreadyRevealed",
+      "msg": "Already revealed"
+    },
+    {
+      "code": 6009,
+      "name": "AlreadySlashed",
+      "msg": "Already slashed"
+    },
+    {
+      "code": 6010,
+      "name": "CommitmentMismatch",
+      "msg": "Commitment mismatch"
+    },
+    {
+      "code": 6011,
+      "name": "InsufficientReveals",
+      "msg": "Not enough reveals to finalize"
+    },
+    {
+      "code": 6012,
+      "name": "BindingSlotNotReached",
+      "msg": "Binding slot not reached yet"
+    },
+    {
+      "code": 6013,
+      "name": "BindingSlotTooSoon",
+      "msg": "Binding slot too soon"
+    },
+    {
+      "code": 6014,
+      "name": "BindingSlotTooFar",
+      "msg": "Binding slot too far"
+    },
+    {
+      "code": 6015,
+      "name": "SlashNotAllowed",
+      "msg": "Slash not allowed in current state"
+    },
+    {
+      "code": 6016,
+      "name": "NoSlashPool",
+      "msg": "No slash pool to claim"
+    },
+    {
+      "code": 6017,
+      "name": "SlashAlreadyClaimed",
+      "msg": "Slash already claimed"
+    },
+    {
+      "code": 6018,
+      "name": "Unauthorized",
+      "msg": "Unauthorized"
+    },
+    {
+      "code": 6019,
+      "name": "SlotHashNotFound",
+      "msg": "Binding slot hash not found in SlotHashes sysvar"
+    },
+    {
+      "code": 6020,
+      "name": "CloseTooSoon",
+      "msg": "Close too soon — wait for timelock after finalization"
+    },
+    {
+      "code": 6021,
+      "name": "MissingRefundAccounts",
+      "msg": "Missing refund accounts in remaining_accounts"
+    },
+    {
+      "code": 6022,
+      "name": "RefundDestMismatch",
+      "msg": "Refund destination does not match contributor pubkey"
+    }
+  ],
+  "types": [
+    {
+      "name": "ContributorCommitted",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "round_id",
+            "type": "u64"
+          },
+          {
+            "name": "contributor",
+            "type": "pubkey"
+          },
+          {
+            "name": "count",
+            "type": "u8"
+          },
+          {
+            "name": "total",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ContributorEntry",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "pubkey",
+            "type": "pubkey"
+          },
+          {
+            "name": "commitment",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "revealed",
+            "type": "bool"
+          },
+          {
+            "name": "slashed",
+            "type": "bool"
+          },
+          {
+            "name": "slash_claimed",
+            "type": "bool"
+          },
+          {
+            "name": "refunded",
+            "type": "bool"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ContributorRevealed",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "round_id",
+            "type": "u64"
+          },
+          {
+            "name": "contributor",
+            "type": "pubkey"
+          },
+          {
+            "name": "count",
+            "type": "u8"
+          },
+          {
+            "name": "threshold",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "EntropyProduced",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "round_id",
+            "type": "u64"
+          },
+          {
+            "name": "entropy",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "slot",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Round",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "coordinator",
+            "type": "pubkey"
+          },
+          {
+            "name": "round_id",
+            "type": "u64"
+          },
+          {
+            "name": "n_contributors",
+            "type": "u8"
+          },
+          {
+            "name": "m_threshold",
+            "type": "u8"
+          },
+          {
+            "name": "commit_deadline",
+            "type": "u64"
+          },
+          {
+            "name": "reveal_deadline",
+            "type": "u64"
+          },
+          {
+            "name": "binding_slot",
+            "type": "u64"
+          },
+          {
+            "name": "commit_count",
+            "type": "u8"
+          },
+          {
+            "name": "reveal_count",
+            "type": "u8"
+          },
+          {
+            "name": "entropy_accumulator",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "entropy_output",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "status",
+            "type": {
+              "defined": {
+                "name": "RoundStatus"
+              }
+            }
+          },
+          {
+            "name": "slash_pool",
+            "type": "u64"
+          },
+          {
+            "name": "finalized_slot",
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "contributors",
+            "type": {
+              "array": [
+                {
+                  "defined": {
+                    "name": "ContributorEntry"
+                  }
+                },
+                10
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "RoundCancelled",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "round_id",
+            "type": "u64"
+          },
+          {
+            "name": "coordinator",
+            "type": "pubkey"
+          },
+          {
+            "name": "refunded",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "RoundStatus",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "CommitPhase"
+          },
+          {
+            "name": "RevealPhase"
+          },
+          {
+            "name": "Finalized"
+          },
+          {
+            "name": "Cancelled"
+          }
+        ]
+      }
+    }
+  ]
+}

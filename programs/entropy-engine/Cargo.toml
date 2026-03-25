@@ -1,0 +1,18 @@
+[package]
+name = "entropy_engine"
+version = "0.2.0"
+edition = "2021"
+description = "RANDAO Entropy Oracle v2 — N-of-M commit-reveal + stake slashing + block hash binding"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "entropy_engine"
+
+[features]
+no-entrypoint = []
+cpi = ["no-entrypoint"]
+idl-build = ["anchor-lang/idl-build"]
+default = []
+
+[dependencies]
+anchor-lang = "0.31.1"
