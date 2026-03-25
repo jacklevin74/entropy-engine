@@ -21,7 +21,7 @@ import * as path from "path";
 
 const RPC_URL    = "https://rpc.mainnet.x1.xyz";
 const PROGRAM_ID = new PublicKey("FDyWtM9UBNfXNuc5oZJ1V86d3dz635WnqMfX8x5Uifbm");
-const WALLET_PATH = "/mnt/sda1/workspace/built/owl/owl-deploy-keypair.json";
+const WALLET_PATH = process.env.COORDINATOR_KEYPAIR ?? path.join(process.env.HOME ?? "~", ".config/solana/id.json");
 const IDL_PATH    = path.join(__dirname, "../target/idl/entropy_engine.json");
 
 const N_CONTRIBUTORS      = 3;

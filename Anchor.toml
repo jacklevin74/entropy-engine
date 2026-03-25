@@ -16,7 +16,7 @@ url = "https://api.apr.dev"
 
 [provider]
 cluster = "https://rpc.testnet.x1.xyz"
-wallet = "/home/jack/.config/solana/id.json"
+wallet = "~/.config/solana/id.json"
 
 [scripts]
 test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"

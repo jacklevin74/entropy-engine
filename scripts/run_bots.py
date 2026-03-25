@@ -12,6 +12,7 @@ Deps:   pip install solana anchorpy solders
 """
 
 import asyncio
+import os
 import hashlib
 import json
 import secrets
@@ -28,7 +29,7 @@ from anchorpy import Program, Provider, Wallet, Context, Idl
 
 RPC_URL    = "https://rpc.mainnet.x1.xyz"
 PROGRAM_ID = Pubkey.from_string("FDyWtM9UBNfXNuc5oZJ1V86d3dz635WnqMfX8x5Uifbm")
-WALLET_PATH = Path("/mnt/sda1/workspace/built/owl/owl-deploy-keypair.json")
+WALLET_PATH = Path(os.environ.get("COORDINATOR_KEYPAIR", "~/.config/solana/id.json")).expanduser()
 IDL_PATH    = Path(__file__).parent.parent / "target/idl/entropy_engine.json"
 
 SYSTEM_PROGRAM  = Pubkey.from_string("11111111111111111111111111111111")
