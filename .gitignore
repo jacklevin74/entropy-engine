@@ -1,0 +1,31 @@
+# Rust / Cargo
+target/
+**/*.rs.bk
+Cargo.lock
+
+# Anchor
+.anchor/
+.DS_Store
+*.so
+*.keypair
+
+# Node / TypeScript
+node_modules/
+dist/
+*.js.map
+.env
+.env.*
+!.env.example
+
+# IDL — keep the published one
+!target/idl/entropy_engine.json
+
+# Keys
+*.json
+!Anchor.toml
+!Cargo.toml
+!target/idl/entropy_engine.json
+
+# Logs
+*.log
+pm2-*.log
